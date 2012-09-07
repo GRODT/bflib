@@ -28,7 +28,6 @@ class betfairLogger {
         private static $instance;
 
         private function __construct(){
-                $this::$logHandle = fopen(vendorConstants::LOGFILE,'a');
         }
 
         public static function getInstance(){
@@ -40,8 +39,6 @@ class betfairLogger {
         }
 
         public function log( $message ){
-                date_default_timezone_set('Europe/London');
-                fwrite($this::$logHandle,"\n".date("F j Y, H:i:s").' '.$message);
         }
 }
 ?>
