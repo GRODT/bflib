@@ -29,7 +29,6 @@
 */
 class betfairController {
 	private $context = '';
-	private $logger;
 
 	public $data = array();
 	private $itemId;
@@ -46,14 +45,11 @@ class betfairController {
 		$this->soapMessage = array();
 		$this->soapMessage['request']=array();
 
-		/* initialize a logger object */
-		$this->logger = betfairLogger::getInstance();
-
 		/* set up the Soap dialoge */
 		$this->prepareDialogue();
 
 		//  If I have a sessionToken cached, skip the login
-		$sessionTokenCache = betfairCache::fetch('sessionToken');
+		$sessionTokenCache = betfairCache::getInstance()->fetch('sessionToken');
 		if( FALSE == $sessionTokenCache ){
 			/* otherwise, log this controller in before we do anything else */
 			$loginresult = $this->login();
@@ -147,7 +143,6 @@ class betfairController {
 					$marketSoapResult = $this->execute();	
 					// If this result bears marketStatus data, handle it appropriately
 					if(isset($marketSoapResult->Result->market->marketStatus)){
-						$this->logger->log($marketSoapResult->Result->market->marketStatus);
 						if($marketSoapResult->Result->market->marketStatus == betfairConstants::ERROR_EVENT_CLOSED){
 							throw new marketClosedException('market is closed');
 						}

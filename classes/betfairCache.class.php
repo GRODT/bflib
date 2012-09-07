@@ -34,7 +34,6 @@ class betfairCache {
         private static $instance;
 
         private function __construct(){
-                $this->cacheHandle = fopen(vendorConstants::CACHEFILE,'a');
         }
 
         public static function getInstance(){
@@ -46,28 +45,19 @@ class betfairCache {
         }
 
         public function store( $key, $value, $ttl=vendorConstants::CACHETTL ){
-		if(FALSE === apc_store($key, $value, $ttl)){
 			$this->cacheElements[$key]=$value;
-		}
 		return(TRUE);
         }
 
         public function fetch( $key ){
-		$cachedValue = apc_fetch($key);
-		if(FALSE === $cachedValue){
-			if(TRUE === isset($this->cacheElements[$key])){	
+			if(TRUE === isset($this->cacheElements[$key])){
 				return($this->cacheElements[$key]);
 			}
 			return(FALSE);
-		}else{
-			return($cachedValue);
-		}
 	}
 
         public function remove( $key ){
-		if(FALSE === apc_delete($key)){
 			unset($this->cacheElements[$key]);
-		}
 		return(TRUE);
 	}
 }

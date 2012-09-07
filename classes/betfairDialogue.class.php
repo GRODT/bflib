@@ -378,7 +378,7 @@ class betfairDialogue {
 	*
 	*/
 	public function setSessionToken( $val ){
-		betfairCache::store('sessionToken',$val, betfairConstants::SESSIONLIFETIME);
+		betfairCache::getInstance()->store('sessionToken',$val, betfairConstants::SESSIONLIFETIME);
 	}
 
 	/**
@@ -387,7 +387,7 @@ class betfairDialogue {
 	* @return string representing lastest provided session token
 	*/
 	public function getSessionToken(){
-		return(betfairCache::fetch('sessionToken'));
+		return(betfairCache::getInstance()->fetch('sessionToken'));
 	}
 
 	/**
