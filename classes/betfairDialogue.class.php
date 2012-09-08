@@ -311,7 +311,7 @@ class betfairDialogue {
 			$dataout->Result->marketDataItems = array();
 
 			foreach($marketItems as $marketItem){
-				//$market = new stdClass;
+				$market = new stdClass;
 				$marketElements = explode('~',$marketItem);
 				$market->marketId = $marketElements[0];
 				if(isset($marketElements[1])){
@@ -360,7 +360,7 @@ class betfairDialogue {
 					$market->turningInPlay = $marketElements[15];
 				}
 				if(true == is_numeric($market->marketId)){
-					//$dataout->Result->marketDataItems[]=$market;
+					$dataout->Result->marketDataItems[]=$market;
 				}
 			}
 		}

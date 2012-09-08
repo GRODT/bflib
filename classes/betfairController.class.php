@@ -32,6 +32,7 @@ class betfairController {
 
 	public $data = array();
 	private $itemId;
+    private $params;
 	public $soapMessage;
 
 	/**
@@ -222,7 +223,7 @@ class betfairController {
 	public function execute(){
 		/* if there is no context, there is nothing to run */
 		if( false === empty( $this->context )){
-			$this->data = $this->constructRequestData($this->context, $this->itemId);
+			$this->data = $this->constructRequestData($this->context, $this->itemId, $this->params);
 			$this->dialogue->setContext($this->context);
 			$this->dialogue->setData($this->data);
 			$soapResult = $this->dialogue->execute();
@@ -278,7 +279,10 @@ class betfairController {
 	*
 	* @todo move this into betfairDialogue as prepareRequestData; rename prepareData to prepareResponseData
 	*/
-	public function constructRequestData( $context, $id = ''){
+	public function constructRequestData( $context, $id = '', $params = array()){
+        $this->itemId = $id;
+        $this->params = $params;
+
 		/* text the context and set parameters as necessary */
 		switch($this->context){
 			case 'login':
@@ -323,6 +327,14 @@ class betfairController {
 			default:
 				break;	
 		}
+
+        if(count($params) !== 0)
+        {
+            foreach($params as $k=>$v)
+            {
+                $this->soapMessage['request'][$k] = $v;
+            }
+        }
 	
 		$this->soapMessage['request']['header']=array('clientStamp' => 0, 'sessionToken' => $this->dialogue->getSessionToken() );
 		return($this->soapMessage);
