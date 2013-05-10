@@ -288,10 +288,12 @@ class betfairController {
 		/* text the context and set parameters as necessary */
 		switch($this->context){
 			case 'login':
-                foreach($this->loginParameters as $k=>$v)
-                {
-                    $this->soapMessage['request'][$k] = $v;
-                }
+				$this->soapMessage['request']['username']=$this->loginParameters['username'];
+				$this->soapMessage['request']['password']=$this->loginParameters['password'];
+				$this->soapMessage['request']['productId']=$this->loginParameters['productid'];
+				$this->soapMessage['request']['vendorSoftwareId']=$this->loginParameters['vendorsoftwareid'];
+				$this->soapMessage['request']['locationId']=$this->loginParameters['locationid'];
+				$this->soapMessage['request']['ipAddress']=$this->loginParameters['ipaddress'];
 				break;
 
 			case 'getAllMarkets':
