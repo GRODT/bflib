@@ -1,0 +1,9 @@
+{
+    "name": "grodt/bflib",
+    "type": "library",
+    "description": "Provides the Betfair API library.",
+    "keywords": ["betfair", "api"],
+    "autoload": {
+        "classmap": ["classes/"]
+    }
+}
