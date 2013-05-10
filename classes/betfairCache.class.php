@@ -44,7 +44,7 @@ class betfairCache {
                 return self::$instance;
         }
 
-        public function store( $key, $value, $ttl=vendorConstants::CACHETTL ){
+        public function store( $key, $value, $ttl=120 ){
 			$this->cacheElements[$key]=$value;
 		return(TRUE);
         }
