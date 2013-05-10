@@ -34,6 +34,7 @@ class betfairController {
 	private $itemId;
     private $params;
 	public $soapMessage;
+    private $loginParameters = array();
 
 	/**
 	* construct controller object
@@ -41,7 +42,8 @@ class betfairController {
 	* @param none
 	* @return none
 	*/
-        public function __construct( ){ 
+        public function __construct($loginParameters = array()){
+            $this->loginParameters = $loginParameters;
 		/* start preparing the virgin soap message */
 		$this->soapMessage = array();
 		$this->soapMessage['request']=array();
@@ -286,14 +288,10 @@ class betfairController {
 		/* text the context and set parameters as necessary */
 		switch($this->context){
 			case 'login':
-				/*
-				$this->soapMessage['request']['username']=vendorConstants::USERNAME;
-				$this->soapMessage['request']['password']=vendorConstants::PASSWORD;
-				$this->soapMessage['request']['productId']=vendorConstants::PRODUCTID;
-				$this->soapMessage['request']['vendorSoftwareId']=vendorConstants::VENDORID;
-				$this->soapMessage['request']['locationId']=vendorConstants::LOCATIONID;
-				$this->soapMessage['request']['ipAddress']=vendorConstants::IPADDRESS;
-				*/
+                foreach($this->loginParameters as $k=>$v)
+                {
+                    $this->soapMessage['request'][$k] = $v;
+                }
 				break;
 
 			case 'getAllMarkets':
